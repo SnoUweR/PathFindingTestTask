@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PathFinderLib", "PathFinderLib\PathFinderLib.csproj", "{AA500C52-39EF-4743-BEC0-E322EF4A803F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PathFinderTests", "PathFinderTests\PathFinderTests.csproj", "{6E9A020C-6CA0-459A-8E61-09C02121B228}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AA500C52-39EF-4743-BEC0-E322EF4A803F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA500C52-39EF-4743-BEC0-E322EF4A803F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA500C52-39EF-4743-BEC0-E322EF4A803F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA500C52-39EF-4743-BEC0-E322EF4A803F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E9A020C-6CA0-459A-8E61-09C02121B228}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E9A020C-6CA0-459A-8E61-09C02121B228}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E9A020C-6CA0-459A-8E61-09C02121B228}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E9A020C-6CA0-459A-8E61-09C02121B228}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
