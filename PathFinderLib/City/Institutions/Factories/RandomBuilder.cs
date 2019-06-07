@@ -45,11 +45,11 @@ namespace PathFinderLib.City.Institutions.Factories
             switch (randomNumber)
             {
                 case 1:
-                    return new Hospital(firstRoad, secondRoad, location);
+                    return new HospitalBuilder().Build(firstRoad, secondRoad, location);
                 case 2:
-                    return new PoliceDepartment(firstRoad, secondRoad, location);
+                    return new PoliceDepartmentBuilder().Build(firstRoad, secondRoad, location);
                 case 3:
-                    return new PostOffice(firstRoad, secondRoad, location);
+                    return new PostOfficeBuilder().Build(firstRoad, secondRoad, location);
                 default:
                     throw new Exception($"Unknown Institution type with number {randomNumber}");
             }
