@@ -51,6 +51,8 @@ namespace PathFinderCLI
                 }
 
                 Console.WriteLine($"Путь найден: {pathInfo}. Общая продолжительность {pathInfo.TotalLength}");
+                Console.WriteLine("Нажмите любую клавишу для продолжения...");
+                Console.ReadKey();
             }
         }
 

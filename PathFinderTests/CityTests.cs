@@ -132,5 +132,24 @@ namespace PathFinderTests
                 }
             }
         }
+
+        /// <summary>
+        /// Проверка работоспособности, когда неправильно указаны координаты города.
+        /// </summary>
+        [Test]
+        public void TestCityIncorrectBoundaries()
+        {
+            // Левый верхний угол будет нижним правым.
+            City city = new City(new Point2D(10, 10), new Point2D(-10, -10), 
+                new RandomBuilder());
+            
+            Assert.AreEqual(4, city.Roads.Count);
+
+            // Город с нулевым размером.
+            city = new City(new Point2D(0, 0), new Point2D(0, 0),
+                new RandomBuilder());
+
+            Assert.AreEqual(0, city.Roads.Count);
+        }
     }
 }

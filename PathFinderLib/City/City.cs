@@ -63,6 +63,12 @@ namespace PathFinderLib.City
             TopLeftCorner = topLeftCorner;
             BottomRightCorner = bottomRightCorner;
 
+            // Нет смысла создавать дороги, если город нулевого размера.
+            if (topLeftCorner == bottomRightCorner)
+            {
+                return;
+            }
+
             /**
              * По факту, город — это 4 дороги, которые образуют собой прямоугольник, поэтому сразу добавляем
              * их в соответствующий список.
