@@ -18,12 +18,38 @@ namespace PathFinderLib.City
         public float Y { get; }
 
         /// <summary>
+        /// Минимально возможное значение координаты.
+        /// Установлено в int.MinValue по той причине, что с точкой могут выполняться различные преобразования,
+        /// такие как умножение координаты на координату, сложение с другим таким умножением и т.п.
+        /// </summary>
+        public const float MinValue = int.MinValue;
+        
+        /// <summary>
+        /// Максимально возможное значение координаты.
+        /// Установлено в int.MaxValue по той причине, что с точкой могут выполняться различные преобразования,
+        /// такие как умножение координаты на координату, сложение с другим таким умножением и т.п.
+        /// </summary>
+        public const float MaxValue = int.MaxValue;
+        
+        /// <summary>
         /// Конструктор точки.
         /// </summary>
         /// <param name="x">Координата X.</param>
         /// <param name="y">Координата Y.</param>
         public Point2D(float x, float y)
         {
+            if (x < MinValue || x > MaxValue)
+            {
+                throw new ArgumentOutOfRangeException(nameof(x), 
+                    $"Значение координат должно лежать в границах [{MinValue};{MaxValue}]");
+            }
+            
+            if (y < MinValue || y > MaxValue)
+            {
+                throw new ArgumentOutOfRangeException(nameof(y), 
+                    $"Значение координат должно лежать в границах [{MinValue};{MaxValue}]");
+            }
+
             X = x;
             Y = y;
         }
@@ -51,7 +77,7 @@ namespace PathFinderLib.City
         /// <returns>Расстояние между двумя указанными точками.</returns>
         public static float GetPointsDistance(Point2D a, Point2D b)
         {
-            return (float) Math.Sqrt((a.X - b.X) * (a.X - b.X) + (a.Y - b.Y) * (a.Y - b.Y));
+            return (float) Math.Sqrt(Math.Pow(a.X - b.X, 2) + Math.Pow(a.Y - b.Y, 2));
         }
 
         
@@ -113,7 +139,7 @@ namespace PathFinderLib.City
         }
 
         /// <summary>
-        /// Выводит имя объекта с точкой в виде [X;Y].
+        /// Формирует строку вида [X;Y].
         /// </summary>
         /// <returns>Строкое представление объекта в виде [X;Y].</returns>
         public override string ToString()

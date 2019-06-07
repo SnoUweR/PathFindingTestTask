@@ -62,6 +62,7 @@ namespace PathFinderLib.GraphEngine.Algorithms
         private bool TryGetVertexInfo(Vertex vertex, out DijkstraVertexInfo dijkstraVertexInfo)
         {
             dijkstraVertexInfo = default(DijkstraVertexInfo);
+
             if (_verticesInfo.Contains(vertex))
             {
                 dijkstraVertexInfo = _verticesInfo[vertex];
@@ -79,12 +80,12 @@ namespace PathFinderLib.GraphEngine.Algorithms
         {
             var minValue = float.MaxValue;
             DijkstraVertexInfo minVertexInfo = null;
-            foreach (var i in _verticesInfo)
+            foreach (DijkstraVertexInfo vertexInfo in _verticesInfo)
             {
-                if (!i.IsVisited && i.TotalEdgesWeight < minValue)
+                if (!vertexInfo.IsVisited && vertexInfo.TotalEdgesWeight < minValue)
                 {
-                    minVertexInfo = i;
-                    minValue = i.TotalEdgesWeight;
+                    minVertexInfo = vertexInfo;
+                    minValue = vertexInfo.TotalEdgesWeight;
                 }
             }
 
@@ -106,7 +107,7 @@ namespace PathFinderLib.GraphEngine.Algorithms
             InitVerticesData();
             if (!TryGetVertexInfo(startVertex, out var first))
             {
-                return new PathInfo(new Vertex[0], 0);
+                return PathInfo.CreateEmptyPath();
             }
             
             first.TotalEdgesWeight = 0;
@@ -121,6 +122,12 @@ namespace PathFinderLib.GraphEngine.Algorithms
                 SetSumToNextVertex(current);
             }
 
+            TryGetVertexInfo(finishVertex, out var last);
+            // Если искомую вершину мы так и не посетили, значит пути до неё нет.
+            if (!last.IsVisited)
+            {
+                return PathInfo.CreateEmptyPath();
+            }
             return GeneratePath(startVertex, finishVertex);
         }
 
@@ -150,7 +157,7 @@ namespace PathFinderLib.GraphEngine.Algorithms
         /// Метод должен вызываться после всех проходов по графу.
         /// </summary>
         /// <param name="startVertex">Стартовая вершина.</param>
-        /// <param name="finishVertex">Финишная вершина, путь до которой нужно найти.</param>
+        /// <param name="endVertex">Финишная вершина, путь до которой нужно найти.</param>
         /// <returns>Объект с информацией о найденном пути.</returns>
         private PathInfo GeneratePath(Vertex startVertex, Vertex endVertex)
         {

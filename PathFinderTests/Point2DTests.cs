@@ -20,6 +20,18 @@ namespace PathFinderTests
 
             Point2D fourthPoint = new Point2D(6, 0);
             Assert.IsFalse(fourthPoint.IsBetweenTwoPointsOnSameLine(firstPoint, secondPoint));
+            
+            // Диагональ
+            firstPoint = new Point2D(-10, -10);
+            secondPoint = new Point2D(10, 10);
+            thirdPoint = new Point2D(0, 0);
+            Assert.IsTrue(thirdPoint.IsBetweenTwoPointsOnSameLine(firstPoint, secondPoint));  
+            
+            // Проверка граничных точек.
+            firstPoint = new Point2D(Point2D.MinValue, Point2D.MinValue);
+            secondPoint = new Point2D(Point2D.MaxValue, Point2D.MinValue);
+            thirdPoint = new Point2D(Point2D.MaxValue / 2, Point2D.MinValue);
+            Assert.IsTrue(thirdPoint.IsBetweenTwoPointsOnSameLine(firstPoint, secondPoint));
         }
     }
 }

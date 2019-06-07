@@ -88,7 +88,21 @@ namespace PathFinderLib
                 {
                     DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(graph);
                     PathInfo pathInfo = dijkstraAlgorithm.FindShortestPath(startPoint, vertex);
-                    if (pathInfo.TotalLength < shortestPathLength)
+
+                    if (pathInfo.IsEmptyPath()) continue;
+                    if (pathInfo.TotalLength > shortestPathLength) continue;
+
+                    // На слишком малых расстояниях между узлами, может быть проблема, что дистанция одинаковая.
+                    // Поэтому в таких случаях берем элемент с наименьшим числом узлов.
+                    if (pathInfo.TotalLength == shortestPathLength)
+                    {
+                        if (pathInfo.Path.Length < shortestPath.Path.Length)
+                        {
+                            shortestPath = pathInfo;
+                            shortestPathLength = pathInfo.TotalLength;
+                        }
+                    }
+                    else
                     {
                         shortestPath = pathInfo;
                         shortestPathLength = pathInfo.TotalLength;

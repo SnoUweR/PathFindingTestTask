@@ -10,12 +10,12 @@ namespace PathFinderLib.City
         /// <summary>
         /// Координаты начала дороги.
         /// </summary>
-        private readonly Point2D _beginPoint;
+        public Point2D BeginPoint { get; }
 
         /// <summary>
         /// Координаты конца дороги.
         /// </summary>
-        private readonly Point2D _endPoint;
+        public Point2D EndPoint { get; }
 
         /// <summary>
         /// Конструктор объекта дороги.
@@ -24,8 +24,8 @@ namespace PathFinderLib.City
         /// <param name="endPoint">Координаты конца дороги.</param>
         public Road(Point2D beginPoint, Point2D endPoint)
         {
-            _beginPoint = beginPoint;
-            _endPoint = endPoint;
+            BeginPoint = beginPoint;
+            EndPoint = endPoint;
         }
 
         /// <summary>
@@ -44,41 +44,41 @@ namespace PathFinderLib.City
             intersectPoint = default(Point2D);
             const float tolerance = 0.000001f;
 
-            float a = Det2(_beginPoint.X - _endPoint.X, _beginPoint.Y - _endPoint.Y,
-                anotherRoad._beginPoint.X - anotherRoad._endPoint.X, 
-                anotherRoad._beginPoint.Y - anotherRoad._endPoint.Y);
+            float a = Det2(BeginPoint.X - EndPoint.X, BeginPoint.Y - EndPoint.Y,
+                anotherRoad.BeginPoint.X - anotherRoad.EndPoint.X, 
+                anotherRoad.BeginPoint.Y - anotherRoad.EndPoint.Y);
 
             // Если условие выполняется, то значит прямые параллельны.
             if (Math.Abs(a) < float.Epsilon) return false;
 
-            float d1 = Det2(_beginPoint.X, _beginPoint.Y, _endPoint.X, _endPoint.Y);
-            float d2 = Det2(anotherRoad._beginPoint.X, anotherRoad._beginPoint.Y,
-                anotherRoad._endPoint.X, anotherRoad._endPoint.Y);
-            float x = Det2(d1, _beginPoint.X - _endPoint.X,
-                          d2, anotherRoad._beginPoint.X - anotherRoad._endPoint.X) / a;
-            float y = Det2(d1, _beginPoint.Y - _endPoint.Y, 
-                          d2, anotherRoad._beginPoint.Y - anotherRoad._endPoint.Y) / a;
+            float d1 = Det2(BeginPoint.X, BeginPoint.Y, EndPoint.X, EndPoint.Y);
+            float d2 = Det2(anotherRoad.BeginPoint.X, anotherRoad.BeginPoint.Y,
+                anotherRoad.EndPoint.X, anotherRoad.EndPoint.Y);
+            float x = Det2(d1, BeginPoint.X - EndPoint.X,
+                          d2, anotherRoad.BeginPoint.X - anotherRoad.EndPoint.X) / a;
+            float y = Det2(d1, BeginPoint.Y - EndPoint.Y, 
+                          d2, anotherRoad.BeginPoint.Y - anotherRoad.EndPoint.Y) / a;
 
-            if (x < Math.Min(_beginPoint.X, _endPoint.X) - tolerance ||
-                x > Math.Max(_beginPoint.X, _endPoint.X) + tolerance)
+            if (x < Math.Min(BeginPoint.X, EndPoint.X) - tolerance ||
+                x > Math.Max(BeginPoint.X, EndPoint.X) + tolerance)
             {
                 return false;
             }
             
-            if (y < Math.Min(_beginPoint.Y, _endPoint.Y) - tolerance ||
-                y > Math.Max(_beginPoint.Y, _endPoint.Y) + tolerance)
+            if (y < Math.Min(BeginPoint.Y, EndPoint.Y) - tolerance ||
+                y > Math.Max(BeginPoint.Y, EndPoint.Y) + tolerance)
             {
                 return false;
             }
             
-            if (x < Math.Min(anotherRoad._beginPoint.X, anotherRoad._endPoint.X) - tolerance ||
-                x > Math.Max(anotherRoad._beginPoint.X, anotherRoad._endPoint.X) + tolerance)
+            if (x < Math.Min(anotherRoad.BeginPoint.X, anotherRoad.EndPoint.X) - tolerance ||
+                x > Math.Max(anotherRoad.BeginPoint.X, anotherRoad.EndPoint.X) + tolerance)
             {
                 return false;
             }
 
-            if (y < Math.Min(anotherRoad._beginPoint.Y, anotherRoad._endPoint.Y) - tolerance ||
-                y > Math.Max(anotherRoad._beginPoint.Y, anotherRoad._endPoint.Y) + tolerance)
+            if (y < Math.Min(anotherRoad.BeginPoint.Y, anotherRoad.EndPoint.Y) - tolerance ||
+                y > Math.Max(anotherRoad.BeginPoint.Y, anotherRoad.EndPoint.Y) + tolerance)
             {
                 return false;
             }
@@ -102,7 +102,7 @@ namespace PathFinderLib.City
         /// <returns>Информация о дороге в виде «НАЧАЛЬНАЯ ТОЧКА->КОНЕЧНАЯ ТОЧКА».</returns>
         public override string ToString()
         {
-            return $"{_beginPoint.ToString()}->{_endPoint.ToString()}";
+            return $"{BeginPoint.ToString()}->{EndPoint.ToString()}";
         }
     }
 }
