@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PathFinderLib.City;
 using PathFinderLib.City.Institutions;
+using PathFinderLib.City.Institutions.Factories;
 using PathFinderLib.GraphEngine;
 using PathFinderLib.GraphEngine.Algorithms;
 
@@ -62,9 +63,9 @@ namespace PathFinderLib
         /// </summary>
         /// <param name="graph">Граф, соответствующий городу, в котором будем искать путь.</param>
         /// <param name="startPoint">Стартовая точка, из которой ищем путь.</param>
-        /// <typeparam name="T">Тип объекта постройки, к которой ищем путь.</typeparam>
+        /// <param name="institutionType">Тип постройки, к которой ищем путь.</param>
         /// <returns>Объект с информацией о найденном или не найденном пути.</returns>
-        public static PathInfo FindPathTo<T>(Graph graph, Vertex startPoint) where T: Institution
+        public static PathInfo FindPathTo(Graph graph, Vertex startPoint, InstitutionType institutionType)
         {
             PathInfo shortestPath = PathInfo.CreateEmptyPath();
             float shortestPathLength = float.MaxValue;
@@ -82,8 +83,8 @@ namespace PathFinderLib
                 // Стартовая точка не может оказаться конечной.
                 if (vertex == startPoint) continue;
                 
-                Institution institution = vertex.Tag as T;
-                if (institution != null)
+                Institution institution = vertex.Tag as Institution;
+                if (institution != null && institution.GetInstitutionType() == institutionType)
                 {
                     DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(graph);
                     PathInfo pathInfo = dijkstraAlgorithm.FindShortestPath(startPoint, vertex);
@@ -105,9 +106,9 @@ namespace PathFinderLib
         /// </summary>
         /// <param name="city">Объект с городом, поиск пути в котором необходимого выполнить.</param>
         /// <param name="startInstitution">Стартовый объект, из которой ищем путь.</param>
-        /// <typeparam name="T">Тип объекта постройки, к которой ищем путь.</typeparam>
+        /// <param name="institutionType">Тип постройки, к которой ищем путь.</param>
         /// <returns>Объект с информацией о найденном или не найденном пути.</returns>
-        public static PathInfo FindPathTo<T>(City.City city, Institution startInstitution) where T: Institution
+        public static PathInfo FindPathTo(City.City city, Institution startInstitution, InstitutionType institutionType)
         {
             Graph graph = ConvertCityToGraph(city);
             Vertex startVertex = graph.Vertices.FirstOrDefault(vertex => vertex.Tag == startInstitution);
@@ -117,7 +118,7 @@ namespace PathFinderLib
                     nameof(startInstitution));
             }
 
-            return FindPathTo<T>(graph, startVertex);
+            return FindPathTo(graph, startVertex, institutionType);
         }
     }
 }

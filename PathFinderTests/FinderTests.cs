@@ -52,7 +52,7 @@ namespace PathFinderTests
              * оказаться конечной». Для этого пытаемся найти путь до точки того же типа, что и стартовая.
              */
             Graph graph = DataGenerator.GenerateTestCityGraph();
-            PathInfo pathInfo = Finder.FindPathTo<Hospital>(graph, graph.Vertices.First());
+            PathInfo pathInfo = Finder.FindPathTo(graph, graph.Vertices.First(), InstitutionType.Hospital);
 
             Assert.IsFalse(pathInfo.IsEmptyPath());
 
@@ -60,18 +60,18 @@ namespace PathFinderTests
             City cityWithSameInstitutes = DataGenerator.GenerateTestCity(new PostOfficeBuilder());
             Graph graphWithSameInstitutes = Finder.ConvertCityToGraph(cityWithSameInstitutes);
 
-            pathInfo = Finder.FindPathTo<PostOffice>(graphWithSameInstitutes, 
-                graphWithSameInstitutes.Vertices.First());
+            pathInfo = Finder.FindPathTo(graphWithSameInstitutes, 
+                graphWithSameInstitutes.Vertices.First(), InstitutionType.PostOffice);
             
             Assert.IsFalse(pathInfo.IsEmptyPath());
             
             // Проверяем ситуацию, когда в городе нет искомого объекта.
-            pathInfo = Finder.FindPathTo<Hospital>(graphWithSameInstitutes, 
-                graphWithSameInstitutes.Vertices.First());
+            pathInfo = Finder.FindPathTo(graphWithSameInstitutes, 
+                graphWithSameInstitutes.Vertices.First(), InstitutionType.Hospital);
             
             Assert.IsTrue(pathInfo.IsEmptyPath());
         }
-        
+
         [Test]
         public void TestFindPathToOverload()
         {
@@ -79,11 +79,13 @@ namespace PathFinderTests
 
             // Проверка перегрузки метода поиска, который принимает город и объект учреждения, а не граф.
             // Результаты должны быть идентичны версии с графом.
-            
+
             Graph graph = DataGenerator.GenerateTestCityGraph();
-            PathInfo graphPathInfo = Finder.FindPathTo<Hospital>(graph, graph.Vertices.First());
-            PathInfo cityPathInfo = Finder.FindPathTo<Hospital>(city, city.Institutions.First());
-            
+            PathInfo graphPathInfo = Finder.FindPathTo(graph, graph.Vertices.First(), 
+                InstitutionType.Hospital);
+            PathInfo cityPathInfo = Finder.FindPathTo(city, city.Institutions.First(), 
+                InstitutionType.Hospital);
+
             Assert.AreEqual(graphPathInfo.Path.Length, cityPathInfo.Path.Length);
             Assert.AreEqual(graphPathInfo.TotalLength, cityPathInfo.TotalLength);
         }

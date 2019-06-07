@@ -9,5 +9,10 @@ namespace PathFinderLib.City.Institutions
         {
             
         }
+
+        public override InstitutionType GetInstitutionType()
+        {
+            return InstitutionType.PostOffice;
+        }
     }
 }

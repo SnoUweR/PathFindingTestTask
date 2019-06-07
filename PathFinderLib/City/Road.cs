@@ -95,5 +95,14 @@ namespace PathFinderLib.City
         {
             return (x1 * y2) - (y1 * x2);
         }
+
+        /// <summary>
+        /// Возвращает информацию о дороге в виде «НАЧАЛЬНАЯ ТОЧКА->КОНЕЧНАЯ ТОЧКА».
+        /// </summary>
+        /// <returns>Информация о дороге в виде «НАЧАЛЬНАЯ ТОЧКА->КОНЕЧНАЯ ТОЧКА».</returns>
+        public override string ToString()
+        {
+            return $"{_beginPoint.ToString()}->{_endPoint.ToString()}";
+        }
     }
 }

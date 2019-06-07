@@ -4,11 +4,11 @@
     <PropertyGroup>
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProjectGuid>{AA500C52-39EF-4743-BEC0-E322EF4A803F}</ProjectGuid>
-        <OutputType>Library</OutputType>
+        <ProjectGuid>{109EB717-ECFF-406E-80FD-A565B6D5D032}</ProjectGuid>
+        <OutputType>Exe</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>PathFinderLib</RootNamespace>
-        <AssemblyName>PathFinderLib</AssemblyName>
+        <RootNamespace>PathFinderCLI</RootNamespace>
+        <AssemblyName>PathFinderCLI</AssemblyName>
         <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
     </PropertyGroup>
@@ -32,35 +32,28 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
+        <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+          <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
         <Reference Include="System" />
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="City\City.cs" />
-        <Compile Include="City\InstitutionCollection.cs" />
-        <Compile Include="City\Institutions\Factories\Builder.cs" />
-        <Compile Include="City\Institutions\Factories\HospitalBuilder.cs" />
-        <Compile Include="City\Institutions\Factories\PoliceDepartmentBuilder.cs" />
-        <Compile Include="City\Institutions\Factories\PostOfficeBuilder.cs" />
-        <Compile Include="City\Institutions\Factories\RandomBuilder.cs" />
-        <Compile Include="City\Institutions\Hospital.cs" />
-        <Compile Include="City\Institutions\Institution.cs" />
-        <Compile Include="City\Institutions\InstitutionTypes.cs" />
-        <Compile Include="City\Institutions\PoliceDepartment.cs" />
-        <Compile Include="City\Institutions\PostOffice.cs" />
-        <Compile Include="City\Point2D.cs" />
-        <Compile Include="City\Road.cs" />
-        <Compile Include="Finder.cs" />
-        <Compile Include="GraphEngine\Algorithms\DijkstraAlgorithm.cs" />
-        <Compile Include="GraphEngine\Algorithms\PathInfo.cs" />
-        <Compile Include="GraphEngine\Algorithms\DijkstraVertexInfo.cs" />
-        <Compile Include="GraphEngine\Algorithms\DijkstraVertexInfoCollection.cs" />
-        <Compile Include="GraphEngine\Edge.cs" />
-        <Compile Include="GraphEngine\Graph.cs" />
-        <Compile Include="GraphEngine\Vertex.cs" />
+        <Compile Include="CityInputInfo.cs" />
+        <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\PathFinderLib\PathFinderLib.csproj">
+        <Project>{aa500c52-39ef-4743-bec0-e322ef4a803f}</Project>
+        <Name>PathFinderLib</Name>
+      </ProjectReference>
+    </ItemGroup>
+    <ItemGroup>
+      <None Include="packages.config" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

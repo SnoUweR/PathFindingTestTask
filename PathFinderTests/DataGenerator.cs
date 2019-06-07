@@ -36,7 +36,7 @@ namespace PathFinderTests
 
         /// <summary>
         /// Генерирует и возвращает граф, описывающий тестовый город из функции
-        /// <see cref="GenerateTestCity"/>.
+        /// GenerateTestCity.
         /// </summary>
         /// <returns>Граф, описывающий тестовый город.</returns>
         public static Graph GenerateTestCityGraph()

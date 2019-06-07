@@ -8,5 +8,10 @@ namespace PathFinderLib.City.Institutions
         public Hospital(Road firstRoad, Road secondRoad, Point2D location) : base(firstRoad, secondRoad, location)
         {
         }
+
+        public override InstitutionType GetInstitutionType()
+        {
+            return InstitutionType.Hospital;
+        }
     }
 }
