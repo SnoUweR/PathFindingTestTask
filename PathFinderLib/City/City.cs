@@ -30,7 +30,7 @@ namespace PathFinderLib.City
         /// самого города.
         /// Автоматически заполняется новыми пересечениями при каждом вызове метода <see cref="AddRoad"/>.
         /// </summary>
-        public List<Institution> Institutions { get; private set; }
+        public InstitutionCollection Institutions { get; private set; }
 
         /// <summary>
         /// Словарь, описывающий какие учреждения стоят на пересечении одной из конкретных дорог.
@@ -57,7 +57,7 @@ namespace PathFinderLib.City
             _insitutionBuilder = insitutionBuilder;
 
             Roads = new List<Road>();
-            Institutions = new List<Institution>();
+            Institutions = new InstitutionCollection();
             _roadInstitutions = new Dictionary<Road, List<Institution>>();
 
             TopLeftCorner = topLeftCorner;
@@ -78,7 +78,8 @@ namespace PathFinderLib.City
         /// <summary>
         /// Добавляет новую дорогу в город, а также автоматически проверяет её пересечение
         /// с другими дорогами и границами города. Если пересечение найдется, то на это место будет
-        /// добавлена новая постройка.
+        /// добавлена новая постройка. Но если в городе уже существует постройка на найденных координатах пересечения,
+        /// то новая добавлена не будет.
         /// Помимо этого, добавляет в список «соседей» уже существующих построек новую.
         /// </summary>
         /// <param name="newRoad">Новая дорогая для добавления.</param>
@@ -88,10 +89,17 @@ namespace PathFinderLib.City
             {
                 if (existedRoad.TryGetIntersectPoint(newRoad, out var intersectPoint))
                 {
-                    var newInstitution = _insitutionBuilder.Build(existedRoad, newRoad,
-                        intersectPoint);
-                    
-                    Institutions.Add(newInstitution);
+                    Institution newInstitution; 
+                    if (Institutions.Contains(intersectPoint))
+                    {
+                        newInstitution = Institutions[intersectPoint];
+                    }
+                    else
+                    {
+                        newInstitution = _insitutionBuilder.Build(existedRoad, newRoad,
+                            intersectPoint);
+                        Institutions.Add(newInstitution);
+                    }
 
                     UpdateNeighbours(existedRoad, newInstitution, intersectPoint);
                     UpdateNeighbours(newRoad, newInstitution, intersectPoint);

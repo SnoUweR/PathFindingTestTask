@@ -54,6 +54,38 @@ namespace PathFinderLib.City
             return (float) Math.Sqrt((a.X - b.X) * (a.X - b.X) + (a.Y - b.Y) * (a.Y - b.Y));
         }
 
+        
+        /// <summary>
+        /// Перегрузка метода получения хэш значения объекта.
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 13;
+                hash = (hash * 7) + X.GetHashCode();
+                hash = (hash * 7) + Y.GetHashCode();
+                return hash;
+            }
+        }
+
+        /// <summary>
+        /// Перегрузка оператора проверки на равенство.
+        /// Если координаты сравниваемых точек равны, то значит и их объекты равны.
+        /// Не учитывает погрешность при работе с float.
+        /// </summary>
+        /// <param name="obj">Вторая точка.</param>
+        /// <returns>true, если обе точки равны по координатам. false, если нет.</returns>
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+
+            Point2D otherPoint = (Point2D) obj;
+
+            return (X == otherPoint.X) && (Y == otherPoint.Y);
+        }
+
         /// <summary>
         /// Перегрузка оператора сравнения на равенство.
         /// Если координаты сравниваемых точек равны, то значит и их объекты равны.

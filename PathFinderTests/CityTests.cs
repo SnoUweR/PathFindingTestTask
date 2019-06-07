@@ -72,7 +72,64 @@ namespace PathFinderTests
                     Assert.AreEqual(validationValues[institution.Location], institution.Neighbours.Count, 
                         $"{institution.Location}");
                 }
+            }
+            
+            // Проверим город, который пока без дорог. Но так как границы тоже дороги, то должно быть 4 учреждения.
+            City city2 = new City(new Point2D(0, 0), new Point2D(10, 10), 
+                new RandomBuilder(1337));
+            
+            Assert.AreEqual(4, city2.Institutions.Count);
+            
+            Dictionary<Point2D, int> city2ValidationValues = new Dictionary<Point2D, int>()
+            {
+                {new Point2D(0, 0), 2},
+                {new Point2D(10, 0), 2},
+                {new Point2D(10, 10), 2},
+                {new Point2D(0, 10), 2},
+            };
+            
+            foreach (Institution institution in city2.Institutions)
+            {
+                if (city2ValidationValues.ContainsKey(institution.Location))
+                {
+                    Assert.AreEqual(city2ValidationValues[institution.Location], institution.Neighbours.Count, 
+                        $"{institution.Location}");
+                }
+            }
+                        
+            // Проверяем ситуацию, когда дорога проходит ровно по центру пересечения других двух дорог.
+            city2.AddRoad(new Road(new Point2D(-2, -2), new Point2D(14, 14)));
 
+            foreach (Institution institution in city2.Institutions)
+            {
+                Console.WriteLine(institution.Location);
+            }
+
+            // Если дорога прошла между другого пересечения, то новых построек не будет.
+            Assert.AreEqual(4, city2.Institutions.Count);
+            
+            /*
+             * Тем не менее, если дорога прошла сквозь другие пересечения, то тогда она должна связать те учреждения,
+             * которые до этого не были связаны.
+             * То есть, например, те, что по углам располагались. Прямой связи между левым верхним и правым нижним
+             * углом не было, а теперь есть. А значит нужно проверить соседей.
+             */
+            
+            Dictionary<Point2D, int> city2ValidationValuesAfterRoad = new Dictionary<Point2D, int>()
+            {
+                {new Point2D(0, 0), 3},
+                {new Point2D(10, 0), 2},
+                {new Point2D(10, 10), 3},
+                {new Point2D(0, 10), 2},
+            };
+            
+            foreach (Institution institution in city2.Institutions)
+            {
+                if (city2ValidationValuesAfterRoad.ContainsKey(institution.Location))
+                {
+                    Assert.AreEqual(city2ValidationValuesAfterRoad[institution.Location], institution.Neighbours.Count, 
+                        $"{institution.Location}");
+                }
             }
         }
     }
