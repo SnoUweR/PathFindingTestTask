@@ -4,7 +4,6 @@ using PathFinderLib;
 using PathFinderLib.City;
 using PathFinderLib.City.Institutions;
 using PathFinderLib.City.Institutions.Factories;
-using PathFinderLib.GraphEngine.Algorithms;
 
 namespace PathFinderCLI
 {
@@ -42,7 +41,7 @@ namespace PathFinderCLI
                 if (!TryAskStartPoint(city, out var startPoint)) return;
                 if (!TryAskEndPoint(out var institutionType)) return;
 
-                PathInfo pathInfo = Finder.FindPathTo(city, startPoint, institutionType);
+                CityPathInfo pathInfo = Finder.FindPathTo(city, startPoint, institutionType);
 
                 if (pathInfo.IsEmptyPath())
                 {

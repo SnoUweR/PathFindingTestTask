@@ -83,7 +83,7 @@ namespace PathFinderTests
             Graph graph = DataGenerator.GenerateTestCityGraph();
             PathInfo graphPathInfo = Finder.FindPathTo(graph, graph.Vertices.First(), 
                 InstitutionType.Hospital);
-            PathInfo cityPathInfo = Finder.FindPathTo(city, city.Institutions.First(), 
+            CityPathInfo cityPathInfo = Finder.FindPathTo(city, city.Institutions.First(), 
                 InstitutionType.Hospital);
 
             Assert.AreEqual(graphPathInfo.Path.Length, cityPathInfo.Path.Length);

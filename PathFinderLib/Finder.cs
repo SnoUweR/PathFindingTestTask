@@ -108,7 +108,8 @@ namespace PathFinderLib
         /// <param name="startInstitution">Стартовый объект, из которой ищем путь.</param>
         /// <param name="institutionType">Тип постройки, к которой ищем путь.</param>
         /// <returns>Объект с информацией о найденном или не найденном пути.</returns>
-        public static PathInfo FindPathTo(City.City city, Institution startInstitution, InstitutionType institutionType)
+        public static CityPathInfo FindPathTo(City.City city, Institution startInstitution,
+            InstitutionType institutionType)
         {
             Graph graph = ConvertCityToGraph(city);
             Vertex startVertex = graph.Vertices.FirstOrDefault(vertex => vertex.Tag == startInstitution);
@@ -118,7 +119,12 @@ namespace PathFinderLib
                     nameof(startInstitution));
             }
 
-            return FindPathTo(graph, startVertex, institutionType);
+            
+            PathInfo pathInfo = FindPathTo(graph, startVertex, institutionType);
+            CityPathInfo cityPathInfo = new CityPathInfo(
+                pathInfo.Path.Select(vertex => vertex.Tag as Institution).ToArray(),
+                pathInfo.TotalLength);
+            return cityPathInfo;
         }
     }
 }

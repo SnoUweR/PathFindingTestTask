@@ -39,6 +39,7 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="City\City.cs" />
+        <Compile Include="City\CityPathInfo.cs" />
         <Compile Include="City\InstitutionCollection.cs" />
         <Compile Include="City\Institutions\Factories\Builder.cs" />
         <Compile Include="City\Institutions\Factories\HospitalBuilder.cs" />
